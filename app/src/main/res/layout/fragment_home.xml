@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.home.HomeFragment">
+
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/home_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@drawable/rounded_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/chatty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/chatty"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_logout"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.51" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/appCompatImageView"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+
+                android:src="@drawable/baseline_chat_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_logout"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/colorPrimary"
+                android:src="@drawable/baseline_logout_24"
+                android:contentDescription="@string/log_out"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.444" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="@string/contacts"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/tv_username"
+        app:layout_constraintTop_toBottomOf="@id/home_toolbar"
+        tools:layout_editor_absoluteX="144dp" />
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_110sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_contacts" />
+
+    <ProgressBar
+        android:id="@+id/home_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/tv_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:text="      "
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tv_contacts"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_toolbar"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="NotSibling" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

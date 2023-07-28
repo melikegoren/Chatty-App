@@ -1,0 +1,31 @@
+<!-- custom_toast_layout.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="@drawable/rectangle_bg"
+    android:backgroundTint="?attr/colorAccent"
+    app:layout_constraintCircleRadius="@dimen/_10sdp"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/customToastIcon"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:contentDescription="@null"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/customToastText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:layout_gravity="center"
+        android:text="Your Custom Toast Message" />
+
+</LinearLayout>

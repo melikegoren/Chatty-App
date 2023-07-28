@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:id="@+id/cons_layout"
+    android:layout_height="wrap_content">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:backgroundTint="?attr/colorPrimaryInverse"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="@dimen/_5sdp">
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:padding="@dimen/_8sdp"
+            android:textSize="@dimen/_16ssp"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This is text message"/>
+
+
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</RelativeLayout>
