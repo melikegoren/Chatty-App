@@ -1,6 +1,7 @@
 package com.melikeg.chatty.data.repository
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -20,9 +21,10 @@ import javax.inject.Inject
 
 class FirebaseRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
+    private val firebaseDatabase: FirebaseDatabase
 ): FirebaseRepository {
 
-    private val databaseReference: DatabaseReference =
+    private val databaseReferenceUsers: DatabaseReference =
         FirebaseDatabase.getInstance("https://chatty-8cb2a-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users")
 
     private val databaseReferenceMessages: DatabaseReference =
@@ -52,7 +54,7 @@ class FirebaseRepositoryImpl @Inject constructor(
         return withContext(Dispatchers.IO) {
             var user: User? = null
 
-            val query = databaseReference.orderByChild("email").equalTo(email)
+            val query = databaseReferenceUsers.orderByChild("email").equalTo(email)
             val snapshot = query.get().await()
 
             if (snapshot.exists()) {
@@ -64,24 +66,27 @@ class FirebaseRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveUserWithUsername(user: User) {
+    /*override suspend fun saveUserWithUsername(user: User) {
         return withContext(Dispatchers.IO) {
             val username = user.username
-            val usernameRef = databaseReference.child(username)
-
+            val usernameRef = databaseReferenceUsers.child(username)
             val dataSnapshot = usernameRef.get().await()
-            if (dataSnapshot.exists()) {
-            } else {
-                usernameRef.setValue(user).await()
 
+            for(userr in dataSnapshot.children){
+                if((userr.getValue(User::class.java)?.username) == user.username){
+                    continue
+                }
+                else{
+                    usernameRef.setValue(user).await()
+                }
             }
         }
-    }
+    }*/
 
     override suspend fun getAllUsers(currentUsername: String): Flow<Resource<MutableList<User>>> = flow{
         emit(Resource.Loading)
         val userList = mutableListOf<User>()
-        val snapshot = databaseReference.get().await()
+        val snapshot = databaseReferenceUsers.get().await()
         for (userSnapshot in snapshot.children) {
             val user = userSnapshot.getValue(User::class.java)
             if(currentUsername == user?.username) continue
@@ -96,9 +101,33 @@ class FirebaseRepositoryImpl @Inject constructor(
         emit(Resource.Error(it.message))
     }
 
-    override fun getMessagesReference(): DatabaseReference {
-        return FirebaseDatabase.getInstance("https://chatty-8cb2a-default-rtdb.europe-west1.firebasedatabase.app/").reference.child("messages")
+    override suspend fun getFavUsers(currentUsername: String): Flow<Resource<MutableList<User>>> = flow {
+        emit(Resource.Loading)
+        val favUserList = mutableListOf<User>()
+        val snapshot = databaseReferenceUsers.get().await()
+        for(userSnapshot in snapshot.children){
+            val favUser = userSnapshot.getValue(User::class.java)
+            if (favUser != null) {
+                if(favUser.isFav && currentUsername != favUser.username){
+                    favUserList.add(favUser)
+                    Log.d("favUser", favUser.username)
+                }
+            }
+        }
+        Log.d("favUserListSize", favUserList.size.toString())
+        emit(Resource.Success(favUserList))
+    }.catch {
+        emit(Resource.Error(it.message))
     }
+
+    override fun getMessagesReference(): DatabaseReference {
+        return firebaseDatabase.reference.child("messages")
+    }
+
+    override fun getUsersReferance(): DatabaseReference {
+        return firebaseDatabase.reference.child("users")
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun sendMessage(senderId: String, receiverId: String, messageText: String){

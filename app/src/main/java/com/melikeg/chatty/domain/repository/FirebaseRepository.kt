@@ -20,14 +20,16 @@ interface FirebaseRepository {
 
     suspend fun getUser(email: String): User?
 
-    suspend fun saveUserWithUsername(user: User)
+    //suspend fun saveUserWithUsername(user: User)
 
     suspend fun getAllUsers(currentUsername: String): Flow<Resource<MutableList<User>>>
+
+    suspend fun getFavUsers(currentUsername: String): Flow<Resource<MutableList<User>>>
 
     suspend fun sendMessage( senderId: String, receiverId: String, messageText: String)
 
     fun getMessagesReference(): DatabaseReference
 
-
+    fun getUsersReferance(): DatabaseReference
 
 }

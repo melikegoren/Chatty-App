@@ -56,6 +56,13 @@ class SignUpFragment : Fragment() {
 
         }
 
+        /*viewModel.isUsernameExist.observe(viewLifecycleOwner){
+            when(it){
+                true -> requireContext().showCustomToast("Username is already taken", R.drawable.baseline_warning_24)
+                false -> {}
+            }
+        }*/
+
     }
 
     private fun signUpButton(){
@@ -70,7 +77,7 @@ class SignUpFragment : Fragment() {
 
             else{
                 viewModel.signUpWithEmailAndPassword(
-                    binding.email.text.toString(), binding.password.text.toString(), binding.username.text.toString())
+                    binding.email.text.toString(), binding.password.text.toString(), binding.username.text.toString(),requireContext())
             }
         }
     }
