@@ -21,11 +21,20 @@ class HomeViewModel @Inject constructor(
     private var _signOutStatus = MutableLiveData<Boolean>()
     val signOutStatus: LiveData<Boolean> = _signOutStatus
 
-    private val _usernameLiveData = MutableLiveData<User?>()
+    private val _usernameLiveData = MutableLiveData<User?>() //??
     val usernameLiveData: LiveData<User?> get() = _usernameLiveData
 
     private var _userList = MutableLiveData<Resource<List<User>>>()
     val userList: LiveData<Resource<List<User>>> get() = _userList
+
+    private var _favUserList = MutableLiveData<Resource<List<User>>>()
+    val favUserList: LiveData<Resource<List<User>>> get() = _favUserList
+
+    private var _userLiveData=  MutableLiveData<User?>()
+    val userLiveData: LiveData<User?> get() = _userLiveData
+
+    private var _userIsFav = MutableLiveData<Boolean>()
+    val userIsFav: LiveData<Boolean> = _userIsFav
 
 
     fun signOut() = viewModelScope.launch{
@@ -41,6 +50,14 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun provideUser(email: String){
+        viewModelScope.launch {
+            val user = firebaseRepository.getUser(email)
+            _userLiveData.value = user
+        }
+
+    }
+
     fun getUsers(currentUsername: String) = viewModelScope.launch {
         firebaseRepository.getAllUsers(currentUsername).collectLatest {
             when(it){
@@ -50,6 +67,34 @@ class HomeViewModel @Inject constructor(
             }
 
         }
+    }
+
+    fun saveFavUser(signedInUsername: String, favUser: User) = viewModelScope.launch {
+        firebaseRepository.saveFavUsers(signedInUsername, favUser)
+    }
+
+    fun getFavUsers(currentUsername: String) = viewModelScope.launch {
+        firebaseRepository.getFavUsers(currentUsername).collectLatest {
+            when(it){
+                is Resource.Loading -> _favUserList.value = Resource.Loading
+                is Resource.Success -> _favUserList.value = Resource.Success(it.result)
+                is Resource.Error -> _favUserList.value = Resource.Error(it.exception.toString())
+
+            }
+        }
+    }
+
+    fun checkIfFav(signedInUsername: String, contact: User){
+        viewModelScope.launch {
+            _userIsFav.value = firebaseRepository.checkIfFav(signedInUsername,contact)
+        }
+    }
+
+    fun removeFromFav(signedInUser: User, userToRemove: User){
+        viewModelScope.launch {
+            firebaseRepository.removeUserFromFav(signedInUser,userToRemove)
+        }
+
     }
 
 }

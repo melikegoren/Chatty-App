@@ -20,6 +20,6 @@ object FirebaseModule {
     fun provideFirebaseUser(auth: FirebaseAuth): FirebaseUser? = auth.currentUser
 
     @Provides
-    fun provideFirebaseDatabase(): FirebaseDatabase = FirebaseDatabase.getInstance()
+    fun provideFirebaseDatabase(): FirebaseDatabase = FirebaseDatabase.getInstance("https://chatty-8cb2a-default-rtdb.europe-west1.firebasedatabase.app/")
 
 }

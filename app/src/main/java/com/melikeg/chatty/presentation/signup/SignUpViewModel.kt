@@ -24,7 +24,7 @@ class SignUpViewModel @Inject constructor(
     : ViewModel() {
     private val _signUpStatus = MutableLiveData<Resource<AuthResult>>()
     val signUpStatus: LiveData<Resource<AuthResult>> get() = _signUpStatus
-    
+
 
 
     fun signUpWithEmailAndPassword(email: String, password: String, username: String,context: Context) =

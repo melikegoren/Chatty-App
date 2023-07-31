@@ -8,14 +8,19 @@ import android.text.style.ClickableSpan
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Filter
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.NavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.melikeg.chatty.R
+import com.melikeg.chatty.domain.model.User
 import com.melikeg.chatty.presentation.signin.SignInFragmentDirections
+import java.util.Locale
 
-fun TextView.spannable(fullText: String, clickableText: String,context: Context, navController: NavController){
+fun TextView.spannable(fullText: String, clickableText: String, navController: NavController){
 
     val startIndex = fullText.indexOf(clickableText)
     val endIndex = startIndex + clickableText.length
@@ -56,6 +61,13 @@ fun Context.showCustomToast(message: String, iconResId: Int) {
     toast.view = layout
     toast.show()
 }
+
+fun <T : RecyclerView.Adapter<*>> RecyclerView.setRecyclerView(adapter: T){
+    this.layoutManager = LinearLayoutManager(context)
+    this.adapter = adapter
+}
+
+
 
 
 

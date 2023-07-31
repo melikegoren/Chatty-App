@@ -12,7 +12,7 @@ import dagger.hilt.components.SingletonComponent
 object UserRepositoryModule {
 
     @Provides
-    fun provideUserRepository(
+    fun provideRepository(
         firebaseRepository: FirebaseRepositoryImpl
     ): FirebaseRepository = firebaseRepository
 }

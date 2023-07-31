@@ -53,7 +53,7 @@
                 android:id="@+id/btn_logout"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_32sdp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="@dimen/_14sdp"
                 android:background="?attr/colorPrimary"
                 android:src="@drawable/baseline_logout_24"
                 android:contentDescription="@string/log_out"
@@ -61,6 +61,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.444" />
+            
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_fav"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_31sdp"
+                android:layout_marginBottom="1dp"
+                app:layout_constraintEnd_toStartOf="@id/btn_logout"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:src="@drawable/baseline_favorite_24"
+                android:backgroundTint="@color/transparent"/>
+                
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -81,17 +94,34 @@
         app:layout_constraintTop_toBottomOf="@id/home_toolbar"
         tools:layout_editor_absoluteX="144dp" />
 
-
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_contacts"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_110sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@drawable/rectangle_bg"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_contacts" />
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRef"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_152sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_contacts">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_contacts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/home_progressBar"

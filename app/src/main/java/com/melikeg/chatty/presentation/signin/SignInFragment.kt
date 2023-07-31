@@ -79,14 +79,13 @@ class SignInFragment : Fragment() {
     }
 
     private fun navigateSignUp() =
-        binding.tvSignUp.spannable(getString(R.string.register), "Sign Up.", requireContext(), findNavController())
+        binding.tvSignUp.spannable(getString(R.string.register), "Sign Up.", findNavController())
 
     private fun isUserSignedIn(){
         val currentUser = auth.currentUser
         if(currentUser != null){
             findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
         }
-
     }
 
 

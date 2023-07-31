@@ -26,10 +26,18 @@ interface FirebaseRepository {
 
     suspend fun getFavUsers(currentUsername: String): Flow<Resource<MutableList<User>>>
 
+    suspend fun saveFavUsers(signedInUsername: String,favUser: User)
+
+    suspend fun checkIfFav(signedInUsername: String, contact: User): Boolean
+
+    suspend fun removeUserFromFav(signedInUser: User, userToRemove: User)
+
     suspend fun sendMessage( senderId: String, receiverId: String, messageText: String)
 
     fun getMessagesReference(): DatabaseReference
 
     fun getUsersReferance(): DatabaseReference
+
+    fun getFavUsersReference(): DatabaseReference
 
 }
