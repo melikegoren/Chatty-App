@@ -16,7 +16,6 @@ import com.melikeg.chatty.common.Resource
 import com.melikeg.chatty.common.setRecyclerView
 import com.melikeg.chatty.common.showCustomToast
 import com.melikeg.chatty.databinding.FragmentHomeBinding
-import com.melikeg.chatty.domain.model.FavUser
 import com.melikeg.chatty.domain.model.User
 import com.melikeg.chatty.domain.repository.FirebaseRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -180,6 +179,8 @@ class HomeFragment : Fragment(), OnHomeClickListener {
     override fun onAddButtonClick(favUser: User) {
         binding.tvContacts.text = getString(R.string.s_favorite_contacts)
         viewModel.checkIfFav(binding.tvUsername.text.toString(), favUser)
+        viewModel.saveFavUser(binding.tvUsername.text.toString(), favUser)
+
         viewModel.userIsFav.observe(viewLifecycleOwner){ check ->
 
                 if(check){
@@ -187,7 +188,6 @@ class HomeFragment : Fragment(), OnHomeClickListener {
 
                 }
                 else{
-                    viewModel.saveFavUser(binding.tvUsername.text.toString(), favUser)
                     requireContext().showCustomToast("User has added to favorites list", R.drawable.baseline_check_24)
 
                 }

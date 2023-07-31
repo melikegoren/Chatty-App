@@ -122,8 +122,9 @@ class FirebaseRepositoryImpl @Inject constructor(
     override suspend fun saveFavUsers(signedInUsername: String, favUser: User) {
         withContext(Dispatchers.IO){
             val snapshot = getFavUsersReference()
-            val userRef = snapshot.child(signedInUsername).child(favUser.username)
-            userRef.setValue(favUser)
+            val userRef = snapshot.child(signedInUsername).push().ref
+            if(!checkIfFav(signedInUsername,favUser))
+                userRef.setValue(favUser)
         }
     }
 
@@ -143,7 +144,7 @@ class FirebaseRepositoryImpl @Inject constructor(
 
     override suspend fun removeUserFromFav(signedInUser: User, userToRemove: User) {
         withContext(Dispatchers.IO){
-            val a = getFavUsersReference().child(signedInUser.username).addValueEventListener(object : ValueEventListener{
+            getFavUsersReference().child(signedInUser.username).addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for(userSnapshot in snapshot.children ){
                         val user = userSnapshot.getValue(User::class.java)
@@ -152,12 +153,9 @@ class FirebaseRepositoryImpl @Inject constructor(
                         }
                     }
                 }
-
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+
                 }
-
-
             })
 
         }
