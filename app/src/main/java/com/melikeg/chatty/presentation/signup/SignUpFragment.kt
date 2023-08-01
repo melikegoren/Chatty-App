@@ -22,8 +22,6 @@ class SignUpFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
     }
 
     override fun onCreateView(
@@ -51,18 +49,8 @@ class SignUpFragment : Fragment() {
                     requireActivity().onBackPressed()
                 }
                 is Resource.Error -> requireContext().showCustomToast(it.exception.toString(), R.drawable.baseline_warning_24)
-
             }
-
         }
-
-        /*viewModel.isUsernameExist.observe(viewLifecycleOwner){
-            when(it){
-                true -> requireContext().showCustomToast("Username is already taken", R.drawable.baseline_warning_24)
-                false -> {}
-            }
-        }*/
-
     }
 
     private fun signUpButton(){

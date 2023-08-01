@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -47,6 +48,7 @@ class SignInFragment : Fragment() {
         signInButton()
         navigateSignUp()
         isUserSignedIn()
+        onBackPressed()
 
 
     }
@@ -88,19 +90,15 @@ class SignInFragment : Fragment() {
         }
     }
 
-
+    private fun onBackPressed(){
+        requireActivity().onBackPressedDispatcher.addCallback(this@SignInFragment) {
+            requireActivity().finish()
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        requireActivity().finish()
-        requireActivity().onBackPressed()
-
-
     }
-
-
-
-
 
 }

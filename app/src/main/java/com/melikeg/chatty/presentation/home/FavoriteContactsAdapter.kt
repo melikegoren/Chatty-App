@@ -15,9 +15,7 @@ RecyclerView.Adapter<FavoriteContactsAdapter.FavoriteContactViewHolder>() {
         addAll(favUserList)
     }
 
-    inner class FavoriteContactViewHolder(val binding: FavContactItemBinding): RecyclerView.ViewHolder(binding.root){
-
-    }
+    inner class FavoriteContactViewHolder(val binding: FavContactItemBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteContactViewHolder{
         val inflater = LayoutInflater.from(parent.context)

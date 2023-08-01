@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.melikeg.chatty.common.Constants
 import com.melikeg.chatty.common.Resource
 import com.melikeg.chatty.domain.model.Message
 import com.melikeg.chatty.domain.model.User
@@ -29,10 +30,10 @@ class FirebaseRepositoryImpl @Inject constructor(
 ): FirebaseRepository {
 
     private val databaseReferenceUsers: DatabaseReference =
-        FirebaseDatabase.getInstance("https://chatty-8cb2a-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users")
+        FirebaseDatabase.getInstance(Constants.DATABASE_URL).getReference("users")
 
     private val databaseReferenceMessages: DatabaseReference =
-        FirebaseDatabase.getInstance("https://chatty-8cb2a-default-rtdb.europe-west1.firebasedatabase.app/").getReference("messages")
+        FirebaseDatabase.getInstance(Constants.DATABASE_URL).getReference("messages")
 
     override suspend fun signUpWithEmailAndPassword(
         email: String,

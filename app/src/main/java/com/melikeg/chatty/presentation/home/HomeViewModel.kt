@@ -72,7 +72,6 @@ class HomeViewModel @Inject constructor(
     fun saveFavUser(signedInUsername: String, favUser: User) = viewModelScope.launch {
         firebaseRepository.saveFavUsers(signedInUsername, favUser)
     }
-
     fun getFavUsers(currentUsername: String) = viewModelScope.launch {
         firebaseRepository.getFavUsers(currentUsername).collectLatest {
             when(it){

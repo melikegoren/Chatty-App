@@ -4,8 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.melikeg.chatty.databinding.ReceivedMessageBinding
+import com.melikeg.chatty.domain.model.ChatbotMessage
 
-class ChatAdapter(private val currentUserId: String, private val messageList: ArrayList<Message>) :
+class ChatAdapter<T : Any>(private val currentUserId: String, private val messageList: ArrayList<T>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private val VIEW_TYPE_MESSAGE_SENT = 1
@@ -28,18 +29,36 @@ class ChatAdapter(private val currentUserId: String, private val messageList: Ar
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder.javaClass == SentViewHolder::class.java){
             val currentMessage = messageList[position]
-            val viewHolder = holder as SentViewHolder
-            viewHolder.sentMessage.text = currentMessage.messageText
+
+            if(currentMessage.javaClass == Message::class.java){
+                currentMessage as Message
+                val viewHolder = holder as ChatAdapter<*>.SentViewHolder
+                viewHolder.sentMessage.text = currentMessage.messageText
+            }
+            else if(currentMessage.javaClass == ChatbotMessage::class.java){
+                currentMessage as ChatbotMessage
+                val viewHolder = holder as ChatAdapter<*>.SentViewHolder
+                viewHolder.sentMessage.text = currentMessage.messageText
+            }
+
 
         }
         else{
             val currentMessage = messageList[position]
-            val viewHolder = holder as ReceivedViewHolder
-            viewHolder.receivedMessage.text = currentMessage.messageText
+            if(currentMessage.javaClass == Message::class.java){
+                currentMessage as Message
+                val viewHolder = holder as ChatAdapter<*>.ReceivedViewHolder
+                viewHolder.receivedMessage.text = currentMessage.messageText
+            }
+
+            else if(currentMessage.javaClass == ChatbotMessage::class.java){
+                currentMessage as ChatbotMessage
+                val viewHolder = holder as ChatAdapter<*>.ReceivedViewHolder
+                viewHolder.receivedMessage.text = currentMessage.messageText
+            }
+
         }
     }
-
-
 
     override fun getItemCount(): Int {
         return messageList.size
@@ -55,16 +74,33 @@ class ChatAdapter(private val currentUserId: String, private val messageList: Ar
 
     }
 
+    fun addMessage(message: T) {
+        messageList.add(message)
+        notifyItemInserted(messageList.size - 1)
+    }
+
     override fun getItemViewType(position: Int): Int {
         super.getItemViewType(position)
 
         val currentMessage = messageList[position]
 
-        if(currentMessage.senderId == currentUserId){
-            return VIEW_TYPE_MESSAGE_SENT
+        if(currentMessage.javaClass == Message::class.java){
+            currentMessage as Message
+            if(currentMessage.senderId == currentUserId){
+                return VIEW_TYPE_MESSAGE_SENT
+            }
+            else{
+                return VIEW_TYPE_MESSAGE_RECEIVED
+            }
         }
         else{
-            return VIEW_TYPE_MESSAGE_RECEIVED
+            currentMessage as ChatbotMessage
+            if(currentMessage.sender == currentUserId){
+                return VIEW_TYPE_MESSAGE_SENT
+            }
+            else{
+                return VIEW_TYPE_MESSAGE_RECEIVED
+            }
         }
     }
 }

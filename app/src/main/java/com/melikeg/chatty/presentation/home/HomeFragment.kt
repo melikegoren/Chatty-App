@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -39,13 +40,10 @@ class HomeFragment : Fragment(), OnHomeClickListener {
     private lateinit var favContactsAdapter: FavoriteContactsAdapter
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,37 +60,41 @@ class HomeFragment : Fragment(), OnHomeClickListener {
         viewModel.provideUser(auth.currentUser?.email.toString())
         searchview()
         favButtonClick()
-
-
-
-
+        chatbotButtonClick()
+        onBackPressed()
 
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun observeData(){
+    private fun observeData() {
 
-        viewModel.signOutStatus.observe(viewLifecycleOwner){ isSignedOut ->
-            if(isSignedOut){
+        viewModel.signOutStatus.observe(viewLifecycleOwner) { isSignedOut ->
+            if (isSignedOut) {
                 findNavController().navigate(R.id.action_homeFragment_to_signInFragment)
-            }
-            else requireContext().showCustomToast("Error occured when signing out.", R.drawable.baseline_warning_24)
+            } else requireContext().showCustomToast(
+                "Error occured when signing out.",
+                R.drawable.baseline_warning_24
+            )
         }
 
-        viewModel.usernameLiveData.observe(viewLifecycleOwner){
+        viewModel.usernameLiveData.observe(viewLifecycleOwner) {
             binding.tvUsername.text = it?.username
             viewModel.getUsers(it!!.username)
             viewModel.getFavUsers(it.username)
         }
 
-        viewModel.userList.observe(viewLifecycleOwner){
-            when(it){
+        viewModel.userList.observe(viewLifecycleOwner) {
+            when (it) {
                 is Resource.Loading -> binding.homeProgressBar.visibility = View.VISIBLE
-                is Resource.Error ->{
-                    requireContext().showCustomToast(it.exception.toString(), R.drawable.baseline_warning_24)
+                is Resource.Error -> {
+                    requireContext().showCustomToast(
+                        it.exception.toString(),
+                        R.drawable.baseline_warning_24
+                    )
                     binding.homeProgressBar.visibility = View.INVISIBLE
 
                 }
+
                 is Resource.Success -> {
                     binding.homeProgressBar.visibility = View.INVISIBLE
                     contactsAdapter = ContactsAdapter(it.result!! as ArrayList<User>, this)
@@ -109,11 +111,10 @@ class HomeFragment : Fragment(), OnHomeClickListener {
             }
         }
 
-
     }
 
 
-    private fun searchview(){
+    private fun searchview() {
         binding.searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -132,23 +133,33 @@ class HomeFragment : Fragment(), OnHomeClickListener {
 
     }
 
-    private fun favButtonClick(){
+    @SuppressLint("NotifyDataSetChanged")
+    private fun favButtonClick() {
         binding.btnFav.setOnClickListener {
             binding.tvContacts.text = resources.getString(R.string.s_favorite_contacts)
 
-            viewModel.favUserList.observe(viewLifecycleOwner){
-                when(it){
+            viewModel.favUserList.observe(viewLifecycleOwner) {
+                when (it) {
                     is Resource.Loading -> {
                         binding.homeProgressBar.visibility = View.VISIBLE
-                        requireContext().showCustomToast("Can't load favorite users.", R.drawable.baseline_warning_24)
+                        requireContext().showCustomToast(
+                            "Can't load favorite users.",
+                            R.drawable.baseline_warning_24
+                        )
 
                     }
+
                     is Resource.Error -> {
-                        requireContext().showCustomToast(it.exception.toString(), R.drawable.baseline_warning_24)
+                        requireContext().showCustomToast(
+                            it.exception.toString(),
+                            R.drawable.baseline_warning_24
+                        )
                         binding.homeProgressBar.visibility = View.INVISIBLE
                     }
+
                     is Resource.Success -> {
-                        favContactsAdapter = FavoriteContactsAdapter(it.result!! as ArrayList<User>, this)
+                        favContactsAdapter =
+                            FavoriteContactsAdapter(it.result!! as ArrayList<User>, this)
                         binding.rvContacts.setRecyclerView(favContactsAdapter)
                         Log.d("userr", it.result.size.toString())
                         binding.homeProgressBar.visibility = View.INVISIBLE
@@ -160,9 +171,16 @@ class HomeFragment : Fragment(), OnHomeClickListener {
         }
     }
 
+    private fun chatbotButtonClick() {
+        binding.btnChatbot.setOnClickListener {
+            val action =
+                HomeFragmentDirections.actionHomeFragmentToChatBotFragment2(binding.tvUsername.text.toString())
+            findNavController().navigate(action)
+        }
 
+    }
 
-    private fun signOut(){
+    private fun signOut() {
         binding.btnLogout.setOnClickListener {
             viewModel.signOut()
         }
@@ -170,10 +188,13 @@ class HomeFragment : Fragment(), OnHomeClickListener {
 
 
     override fun onCardviewClick(email: String, username: String) {
-        val action = HomeFragmentDirections.actionHomeFragmentToChatFragment(email, username, binding.tvUsername.text.toString())
+        val action = HomeFragmentDirections.actionHomeFragmentToChatFragment(
+            email,
+            username,
+            binding.tvUsername.text.toString()
+        )
         findNavController().navigate(action)
     }
-
 
 
     override fun onAddButtonClick(favUser: User) {
@@ -181,42 +202,48 @@ class HomeFragment : Fragment(), OnHomeClickListener {
         viewModel.checkIfFav(binding.tvUsername.text.toString(), favUser)
         viewModel.saveFavUser(binding.tvUsername.text.toString(), favUser)
 
-        viewModel.userIsFav.observe(viewLifecycleOwner){ check ->
+        viewModel.userIsFav.observe(viewLifecycleOwner) { check ->
 
-                if(check){
-                    requireContext().showCustomToast("User has already added to the favorites list", R.drawable.baseline_check_24)
+            if (check) {
+                requireContext().showCustomToast(
+                    "User has already added to the favorites list",
+                    R.drawable.baseline_check_24
+                )
 
-                }
-                else{
-                    requireContext().showCustomToast("User has added to favorites list", R.drawable.baseline_check_24)
-
-                }
+            } else {
+                requireContext().showCustomToast(
+                    "User has added to favorites list",
+                    R.drawable.baseline_check_24
+                )
 
             }
-
-    }
-
-   override fun onRemoveButtonClick(user: User) {
-        viewModel.userLiveData.observe(viewLifecycleOwner){
-            viewModel.removeFromFav(it!!,user)
-            requireContext().showCustomToast("User has been removed from the favorites list.", R.drawable.baseline_check_24)
-
-
         }
-
     }
 
+    override fun onRemoveButtonClick(user: User) {
+        viewModel.userLiveData.observe(viewLifecycleOwner) {
+            viewModel.removeFromFav(it!!, user)
+            requireContext().showCustomToast(
+                "User has been removed from the favorites list.",
+                R.drawable.baseline_check_24
+            )
+        }
+    }
+
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback {
+            requireActivity().finish()
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        requireActivity().finish()
-        requireActivity().onBackPressed()
     }
 
 }
 
-interface OnHomeClickListener{
+interface OnHomeClickListener {
     fun onCardviewClick(email: String, username: String)
     fun onAddButtonClick(favUser: User)
 

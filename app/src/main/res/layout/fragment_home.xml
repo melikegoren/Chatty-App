@@ -43,7 +43,6 @@
                 android:id="@+id/appCompatImageView"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
-
                 android:src="@drawable/baseline_chat_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -73,6 +72,17 @@
                 android:layout_marginEnd="@dimen/_12sdp"
                 android:src="@drawable/baseline_favorite_24"
                 android:backgroundTint="@color/transparent"/>
+
+            <ImageView
+                android:id="@+id/btn_chatbot"
+                android:layout_width="@dimen/_29sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginBottom="1dp"
+                android:src="@drawable/baseline_emoji_emotions_24"
+                app:layout_constraintEnd_toStartOf="@id/btn_fav"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="@dimen/_12sdp"/>
                 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

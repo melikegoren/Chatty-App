@@ -19,8 +19,6 @@ import javax.inject.Inject
 class ChatViewModel @Inject constructor(
     private val firebaseRepository: FirebaseRepository
 ) : ViewModel() {
-
-
     private val messagesReference: DatabaseReference
         get() = firebaseRepository.getMessagesReference()
 

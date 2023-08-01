@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -28,7 +29,7 @@ class ChatFragment : Fragment() {
 
     private val navArgs: ChatFragmentArgs by navArgs()
 
-    private lateinit var chatAdapter: ChatAdapter
+    private lateinit var chatAdapter: ChatAdapter<Message>
 
     private val viewModel: ChatViewModel by viewModels()
 
@@ -38,9 +39,6 @@ class ChatFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
 
     }
 
@@ -61,6 +59,9 @@ class ChatFragment : Fragment() {
         sendButton()
         viewModel.listenForMessages(navArgs.senderUsername, navArgs.username)
         backToHomePage()
+        onBackPressed()
+
+
     }
 
     private fun initComponents(){
@@ -76,7 +77,6 @@ class ChatFragment : Fragment() {
                 is Resource.Success -> {}
             }
         }
-
         viewModel.messagesList.observe(viewLifecycleOwner){
             when(it){
                 is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
@@ -99,7 +99,6 @@ class ChatFragment : Fragment() {
     private fun sendButton(){
         binding.btnSend.setOnClickListener {
             val messageContent = binding.message.text.toString().trim()
-
             if (messageContent.isNotEmpty()) {
                 viewModel.sendMessage(navArgs.senderUsername , navArgs.username, messageContent)
                 binding.message.text?.clear()
@@ -117,15 +116,20 @@ class ChatFragment : Fragment() {
     private fun backToHomePage(){
         binding.btnBack.setOnClickListener{
             findNavController().navigate(R.id.action_chatFragment_to_homeFragment)
-
         }
     }
+
+    private fun onBackPressed(){
+        requireActivity().onBackPressedDispatcher.addCallback(this@ChatFragment) {
+            findNavController().navigate(R.id.action_chatFragment_to_homeFragment)
+        }
+    }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+
     }
-
-
-
 }

@@ -15,15 +15,12 @@ class ContactsAdapter(private val userList: ArrayList<User>, private val onHomeC
     private val initialUserList = ArrayList<User>().apply {
         addAll(userList)
     }
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder{
         val inflater = LayoutInflater.from(parent.context)
         val binding = ContactItemBinding.inflate(inflater, parent, false)
         return ContactViewHolder(binding)
 
     }
-
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val currentUser = userList[position]
 
@@ -38,13 +35,10 @@ class ContactsAdapter(private val userList: ArrayList<User>, private val onHomeC
             onHomeClickListener.onAddButtonClick(currentUser)
 
         }
-
-
     }
     override fun getItemCount(): Int {
         return userList.size
     }
-
     inner class ContactViewHolder(val binding: ContactItemBinding) : RecyclerView.ViewHolder(binding.root){
     }
     fun getFilter(): Filter {

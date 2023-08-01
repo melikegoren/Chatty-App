@@ -3,6 +3,7 @@ package com.melikeg.chatty.di
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
+import com.melikeg.chatty.common.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +21,6 @@ object FirebaseModule {
     fun provideFirebaseUser(auth: FirebaseAuth): FirebaseUser? = auth.currentUser
 
     @Provides
-    fun provideFirebaseDatabase(): FirebaseDatabase = FirebaseDatabase.getInstance("https://chatty-8cb2a-default-rtdb.europe-west1.firebasedatabase.app/")
+    fun provideFirebaseDatabase(): FirebaseDatabase = FirebaseDatabase.getInstance(Constants.DATABASE_URL)
 
 }
