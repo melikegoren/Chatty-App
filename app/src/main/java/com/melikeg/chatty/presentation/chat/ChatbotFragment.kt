@@ -77,7 +77,7 @@ class ChatbotFragment : Fragment() {
 
     private fun getChatbotResponse(userMessage: String) {
         val apiKey = com.melikeg.chatty.common.Constants.API_KEY
-        val request = ChatbotRequest("text-davinci-003",userMessage, 100, 0) // 100 is the maximum tokens in the response
+        val request = ChatbotRequest("text-davinci-003",userMessage, 100, 0)
 
         val call = chatbotService.getChatbotResponse(apiKey,request)
 

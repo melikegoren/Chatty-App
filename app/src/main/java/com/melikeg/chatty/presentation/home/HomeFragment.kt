@@ -37,6 +37,7 @@ class HomeFragment : Fragment(), OnHomeClickListener {
     lateinit var firebaseRepository: FirebaseRepository
 
     private lateinit var contactsAdapter: ContactsAdapter
+
     private lateinit var favContactsAdapter: FavoriteContactsAdapter
 
 
@@ -55,15 +56,16 @@ class HomeFragment : Fragment(), OnHomeClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         signOut()
+        searchview()
         observeData()
         viewModel.fetchUser(auth.currentUser?.email.toString())
         viewModel.provideUser(auth.currentUser?.email.toString())
-        searchview()
         favButtonClick()
         chatbotButtonClick()
         onBackPressed()
 
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     private fun observeData() {
@@ -113,7 +115,6 @@ class HomeFragment : Fragment(), OnHomeClickListener {
 
     }
 
-
     private fun searchview() {
         binding.searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -124,17 +125,17 @@ class HomeFragment : Fragment(), OnHomeClickListener {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                contactsAdapter.getFilter().filter(newText)
                 favContactsAdapter.getFilter().filter(newText)
+                contactsAdapter.getFilter().filter(newText)
                 return true
             }
 
         })
 
     }
-
     @SuppressLint("NotifyDataSetChanged")
     private fun favButtonClick() {
+
         binding.btnFav.setOnClickListener {
             binding.tvContacts.text = resources.getString(R.string.s_favorite_contacts)
 
@@ -198,10 +199,9 @@ class HomeFragment : Fragment(), OnHomeClickListener {
 
 
     override fun onAddButtonClick(favUser: User) {
-        binding.tvContacts.text = getString(R.string.s_favorite_contacts)
-        viewModel.checkIfFav(binding.tvUsername.text.toString(), favUser)
-        viewModel.saveFavUser(binding.tvUsername.text.toString(), favUser)
+        binding.tvContacts.text = resources.getString(R.string.s_favorite_contacts)
 
+        viewModel.checkIfFav(binding.tvUsername.text.toString(), favUser)
         viewModel.userIsFav.observe(viewLifecycleOwner) { check ->
 
             if (check) {
@@ -211,6 +211,8 @@ class HomeFragment : Fragment(), OnHomeClickListener {
                 )
 
             } else {
+                viewModel.saveFavUser(binding.tvUsername.text.toString(), favUser)
+
                 requireContext().showCustomToast(
                     "User has added to favorites list",
                     R.drawable.baseline_check_24

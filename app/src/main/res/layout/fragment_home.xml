@@ -60,7 +60,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.444" />
-            
+
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btn_fav"
                 android:layout_width="@dimen/_30sdp"
@@ -73,10 +73,11 @@
                 android:src="@drawable/baseline_favorite_24"
                 android:backgroundTint="@color/transparent"/>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btn_chatbot"
                 android:layout_width="@dimen/_29sdp"
                 android:layout_height="@dimen/_30sdp"
+                android:backgroundTint="@color/transparent"
                 android:layout_marginBottom="1dp"
                 android:src="@drawable/baseline_emoji_emotions_24"
                 app:layout_constraintEnd_toStartOf="@id/btn_fav"

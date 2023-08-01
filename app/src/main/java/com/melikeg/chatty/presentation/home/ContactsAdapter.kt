@@ -8,7 +8,7 @@ import com.melikeg.chatty.common.searchFilter
 import com.melikeg.chatty.databinding.ContactItemBinding
 import com.melikeg.chatty.domain.model.User
 
-class ContactsAdapter(private val userList: ArrayList<User>, private val onHomeClickListener: OnHomeClickListener) :
+class ContactsAdapter(private val userList: ArrayList<User>, private val onHomeClickListener: OnHomeClickListener?) :
     RecyclerView.Adapter<ContactsAdapter.ContactViewHolder>() {
 
 
@@ -28,11 +28,11 @@ class ContactsAdapter(private val userList: ArrayList<User>, private val onHomeC
         holder.binding.contactUsername.text = currentUser.username
 
         holder.binding.cvContact.setOnClickListener {
-            onHomeClickListener.onCardviewClick(currentUser.email, currentUser.username)
+            onHomeClickListener?.onCardviewClick(currentUser.email, currentUser.username)
         }
 
         holder.binding.btnAdd.setOnClickListener{
-            onHomeClickListener.onAddButtonClick(currentUser)
+            onHomeClickListener?.onAddButtonClick(currentUser)
 
         }
     }
