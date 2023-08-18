@@ -2,10 +2,10 @@
 Chat app using Firebase Realtime Database, Firebase Auth. App also includes chatbot integration built with OpenAi API. 
 
 ## Features
--Real-Time Chatting: Engage in real-time conversations with other users, experiencing instant message delivery.
--User Authentication: Securely sign up and log in to the application, ensuring the privacy of your conversations.
--Friend List: Easily manage your list of friends and initiate private conversations.
--Chatting with Chatbot: Chat with the  OpenAi's "text-davinci-003" model chatbot.
+- Real-Time Chatting: Engage in real-time conversations with other users, experiencing instant message delivery.
+- User Authentication: Securely sign up and log in to the application, ensuring the privacy of your conversations.
+- Friend List: Easily manage your list of friends and initiate private conversations.
+- Chatting with Chatbot: Chat with the  OpenAi's "text-davinci-003" model chatbot.
 
 ## Built With
 - Firebase Realtime Database: Storing user informations, and messages.
@@ -17,7 +17,7 @@ Chat app using Firebase Realtime Database, Firebase Auth. App also includes chat
 - MVVM: To separate the concerns of the application's UI components, making the codebase more organized.
 
 ## Screenshots
-<img width="200" alt="Ekran Resmi 2023-08-08 15 34 18" src="https://github.com/melikegoren/Chatty-App/assets/79282676/4fee02a5-3951-4bdf-b4af-edb44bacb706">
+<img width="289" alt="Ekran Resmi 2023-08-08 15 33 08" src="https://github.com/melikegoren/Chatty-App/assets/79282676/eb2b2178-e886-4ab6-a369-06026a2dcf36">
 <img width="200" alt="Ekran Resmi 2023-08-08 15 35 15" src="https://github.com/melikegoren/Chatty-App/assets/79282676/ddac6a0d-f2a3-4d0e-a2ec-7bd13f721bd1">
 <img width="200" alt="Ekran Resmi 2023-08-08 15 36 03" src="https://github.com/melikegoren/Chatty-App/assets/79282676/0f058f8c-9064-48e1-b1c8-e98efafe27fb">
 <img width="200" alt="Ekran Resmi 2023-08-08 15 37 14" src="https://github.com/melikegoren/Chatty-App/assets/79282676/1287c07e-5e99-46fd-badd-6f3d9f99422e">
