@@ -1,5 +1,5 @@
 # Chatty-App
-Chat app creatied with using Firebase Realtime Database, Firebase Auth. App also includes chatbot integration built with OpenAi API. 
+Chat app created with using Firebase Realtime Database, Firebase Auth. App also includes chatbot integration. 
 
 ## Features
 - Real-Time Chatting: Engage in real-time conversations with other users, experiencing instant message delivery.
